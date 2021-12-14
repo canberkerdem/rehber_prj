@@ -14,7 +14,7 @@ public class KullaniciDAO {
 
         Connection conn = VTBaglanti.baglantiGetir();
 
-        String sorgu ="select sifre from kullanici where kullaici_adi=?";
+        String sorgu ="select sifre from kullanici where kullanici_adi=?";
 
         PreparedStatement ps = conn.prepareStatement(sorgu);
 

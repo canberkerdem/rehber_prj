@@ -10,7 +10,7 @@ public class VTBaglanti {
         Class.forName("org.postgresql.Driver");
 
         Connection conn=
-                DriverManager.getConnection("jdbc:postgresqlÇ//localhost:5432/rehber","postgres","POSTGRES");
+                DriverManager.getConnection("jdbc:postgresql://localhost:5432/rehber","postgres","POSTGRES");
         return conn;
     }
 
