@@ -1,6 +1,8 @@
 package com.bilgeadam.rehberprj.dao;
 
 import com.bilgeadam.rehberprj.dto.KullaniciDTO;
+import com.bilgeadam.rehberprj.sec.AES;
+import com.bilgeadam.rehberprj.util.Sabitler;
 import com.bilgeadam.rehberprj.vt.VTBaglanti;
 
 import java.security.PublicKey;
@@ -14,11 +16,12 @@ public class KullaniciDAO {
 
         Connection conn = VTBaglanti.baglantiGetir();
 
-        String sorgu ="select sifre from kullanici where kullanici_adi=?";
+        String sorgu ="select sifre from kullanici where kullanici_adi=? and aktif=?";
 
         PreparedStatement ps = conn.prepareStatement(sorgu);
 
         ps.setString(1,kullanici.getKullaniciAdi());
+        ps.setInt(2,kullanici.getAktif());
 
         ResultSet rs = ps.executeQuery();
 
@@ -29,8 +32,18 @@ public class KullaniciDAO {
         rs.close();
         ps.close();
         VTBaglanti.baglantiKapat(conn);
+        String cozulmus_sifre = null;
 
-        if (kullanici.getSifre().equals(vtSifre))
+        if (vtSifre != null)
+        {
+          cozulmus_sifre =AES.decrypt(vtSifre,Sabitler.SECRET_KEY);
+        }
+        else {
+            return false;
+        }
+
+
+        if (kullanici.getSifre().equals(cozulmus_sifre))
             return true;
         else
             return false;
