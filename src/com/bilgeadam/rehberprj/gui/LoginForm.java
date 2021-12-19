@@ -53,10 +53,15 @@ public class LoginForm extends JFrame {
 
                     boolean sonuc =KullaniciDAO.giriseYetkilimi(kullanici);
 
-                    if(sonuc)
-                        JOptionPane.showMessageDialog(null,"Girişe Yetkilidir");
-                    else
-                        JOptionPane.showMessageDialog(null,"Girişe Yetkili Değildir");
+                    if(sonuc){
+                        MenuForm menu = new MenuForm();
+                        //Menü ekranını göster
+                        menu.setVisible(true);
+                        //login ekranını gizle
+                        setVisible(false);
+                    }
+                    else{
+                        JOptionPane.showMessageDialog(null,"Girişe Yetkili Değildir");}
 
                 }
 
