@@ -6,16 +6,17 @@ import com.bilgeadam.rehberprj.util.CevirmeIslemleri;
 
 import java.sql.SQLException;
 import java.text.ParseException;
+import java.util.List;
 
 public class KisiDAOTest {
 
     public void ekleTest() throws ParseException, SQLException, ClassNotFoundException {
         KisiDTO kisi = new KisiDTO();
         kisi.setNo(1);
-        kisi.setAd("Naim");
-        kisi.setSoyad("Süleymanoğlu");
-        kisi.setMaas(4567.85);
-        kisi.setDogtar(CevirmeIslemleri.strToUtilDate("11/02/1978"));
+        kisi.setAd("Aziz");
+        kisi.setSoyad("Sancar");
+        kisi.setMaas(0);
+        kisi.setDogtar(CevirmeIslemleri.strToUtilDate("21/04/2002"));
         kisi.setMobilTel("+905321234567");
 
         boolean sonuc = KisiDAO.ekle(kisi);
@@ -27,20 +28,69 @@ public class KisiDAOTest {
 
     }
 
+    public void guncelleTest() throws ParseException, SQLException, ClassNotFoundException {
+        KisiDTO kisi = new KisiDTO();
+        kisi.setNo(1);
+        kisi.setAd("Aziz");
+        kisi.setSoyad("Pancar");
+        kisi.setMaas(1000);
+        kisi.setDogtar(CevirmeIslemleri.strToUtilDate("21/04/2002"));
+        kisi.setMobilTel("+905321234567");
+
+        boolean sonuc = KisiDAO.guncelle(kisi);
+
+        if(sonuc)
+            System.out.println("Başarıyla güncellendi");
+        else
+            System.out.println("Güncellenemedi!!!");
+
+    }
+
+    public void silTest() throws SQLException, ClassNotFoundException {
+
+        boolean sonuc = KisiDAO.sil(2);
+
+        if(sonuc)
+            System.out.println("Başarıyla silindi");
+        else
+            System.out.println("Silinemedi!!!");
+
+    }
+
+    public void listeleTest()
+            throws SQLException, ClassNotFoundException {
+
+        List<KisiDTO> kisiler = KisiDAO.listele();
+
+        for(KisiDTO kisi: kisiler)
+        {
+            System.out.println(kisi);
+        }
+
+
+    }
+
     public static void main(String[] args) {
 
         try {
 
             KisiDAOTest kdt = new KisiDAOTest();
-            kdt.ekleTest();
+            //kdt.ekleTest();
+            //kdt.listeleTest();
+            //kdt.silTest();
+            kdt.guncelleTest();
 
-        } catch (ParseException e) {
-            e.printStackTrace();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        } catch (ClassNotFoundException e) {
+        }
+        catch (SQLException e) {
             e.printStackTrace();
         }
+        catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
+
 
     }
 }
